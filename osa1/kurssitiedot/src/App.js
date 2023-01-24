@@ -1,64 +1,54 @@
-const Header = (props) => {
-  console.log(props);
+const Header = (c) => {
+  console.log(c);
   return (
     <div>
-      <h1>{props.course}</h1>
+      <h1>{c}</h1>
     </div>
   );
 };
 
-const Content = (props) => {
-  console.log(props);
-  return (
-    <div>
-      <Part osa={props.part1} tehtavat={props.exercises1} />
-      <Part osa={props.part2} tehtavat={props.exercises2} />
-      <Part osa={props.part3} tehtavat={props.exercises3} />
-    </div>
-  );
-};
-
-const Total = (props) => {
-  console.log(props);
-  return (
-    <div>
-      <p>Number of exercises {props.total}</p>
-    </div>
-  );
-};
-
-const Part = (props) => {
-  console.log(props);
+const Content = (n, e) => {
+  console.log(n, e);
   return (
     <div>
       <p>
-        {props.osa} {props.tehtavat}
+        {n} {e}{" "}
       </p>
+    </div>
+  );
+};
+
+const Total = (e1, e2, e3) => {
+  console.log(e1, e2, e3);
+  return (
+    <div>
+      <p>Number of exercises {e1 + e2 + e3}</p>
     </div>
   );
 };
 
 const App = () => {
   const course = "Half Stack application development";
-  const part1 = "Fundamentals of React";
-  const exercises1 = 10;
-  const part2 = "Using props to pass data";
-  const exercises2 = 7;
-  const part3 = "State of a component";
-  const exercises3 = 14;
+  const part1 = {
+    name: "Fundamentals of React",
+    exercises: 10,
+  };
+  const part2 = {
+    name: "Using props to pass data",
+    exercises: 7,
+  };
+  const part3 = {
+    name: "State of a component",
+    exercises: 14,
+  };
 
   return (
     <div>
-      <Header course={course} />
-      <Content
-        part1={part1}
-        exercises1={exercises1}
-        part2={part2}
-        exercises2={exercises2}
-        part3={part3}
-        exercises3={exercises3}
-      />
-      <Total total={exercises1 + exercises2 + exercises3} />
+      {Header(course)}
+      {Content(part1.name, part1.exercises)}
+      {Content(part2.name, part2.exercises)}
+      {Content(part3.name, part3.exercises)}
+      {Total(part1.exercises, part2.exercises, part3.exercises)}
     </div>
   );
 };
