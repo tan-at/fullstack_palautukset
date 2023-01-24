@@ -30,7 +30,7 @@ const Total = (parts) => {
   const z = y[0].exercises + y[1].exercises + y[2].exercises;
   return (
     <div>
-      <p>Number of exercises{z}</p>
+      <p>Number of exercises {z}</p>
     </div>
   );
 };
