@@ -4,16 +4,50 @@ const History = (props) => {
   if (props.totalClicks.length === 0) {
     return <div>No feedback given</div>;
   }
-  return <div>button press history: {props.totalClicks.join(" ")}</div>;
-};
-
-const All = (props) => {
-  return props.totalClicks.length;
 };
 
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
+
+const Statistics = (props) => {
+  let lista = props.totalClicks;
+  if (lista.length === 0) {
+    return <div>No feedback given</div>;
+  }
+  let good = 0;
+  let neutral = 0;
+  let bad = 0;
+  let all = lista.length;
+  let count = 0;
+
+  lista.forEach((x) => {
+    if (x === 1) {
+      good += 1;
+      count += 1;
+    }
+    if (x === 0) {
+      neutral += 1;
+    }
+    if (x === -1) {
+      bad += 1;
+      count -= 1;
+    }
+  });
+
+  let average = count / all;
+  let positive = (good * 100) / all;
+  return (
+    <div>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
+      <p>all {all}</p>
+      <p>average {average}</p>
+      <p>positive {positive} %</p>
+    </div>
+  );
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
@@ -56,8 +90,9 @@ const App = () => {
         <p>bad {bad}</p>
         <p>all {all}</p>
         <p>average {count / all}</p>
-        <p>positive {positive / all} %</p>
-        <History totalClicks={totalClicks} />
+        <p>positive {(positive * 100) / all} %</p>
+        <p>-----------------------------------------------</p>
+        <Statistics totalClicks={totalClicks} />
       </div>
     </div>
   );
