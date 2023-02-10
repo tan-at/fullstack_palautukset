@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
@@ -47,15 +48,25 @@ const StatisticLine = (props) => {
   const a = Object.values(props);
   if (a[0] === "positive") {
     return (
-      <p>
-        {a[0]} {a[1]} %
-      </p>
+      <table>
+        <tbody>
+          <tr>
+            <td>{a[0]}</td>
+            <td>{a[1]} %</td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
   return (
-    <p>
-      {a[0]} {a[1]}
-    </p>
+    <table>
+      <tbody>
+        <tr>
+          <td>{a[0]}</td>
+          <td>{a[1]}</td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
