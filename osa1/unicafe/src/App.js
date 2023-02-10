@@ -1,11 +1,5 @@
 import { useState } from "react";
 
-const History = (props) => {
-  if (props.totalClicks.length === 0) {
-    return <div>No feedback given</div>;
-  }
-};
-
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
@@ -39,43 +33,43 @@ const Statistics = (props) => {
   let positive = (good * 100) / all;
   return (
     <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive} %</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average} />
+      <StatisticLine text="positive" value={positive} />
     </div>
   );
 };
 
+const StatisticLine = (props) => {
+  const a = Object.values(props);
+  if (a[0] === "positive") {
+    return (
+      <p>
+        {a[0]} {a[1]} %
+      </p>
+    );
+  }
+  return (
+    <p>
+      {a[0]} {a[1]}
+    </p>
+  );
+};
+
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [all, setAll] = useState(0);
-  const [count, setCount] = useState(0);
-  const [positive, setPositive] = useState(0);
   const [totalClicks, setTotal] = useState([]);
 
   const handleGoodClick = () => {
     setTotal(totalClicks.concat(1));
-    setGood(good + 1);
-    setAll(all + 1);
-    setPositive(positive + 1);
-    setCount(count + 1);
   };
   const handleNeutralClick = () => {
     setTotal(totalClicks.concat(0));
-    setNeutral(neutral + 1);
-    setAll(all + 1);
-    setCount(count + 0);
   };
   const handleBadClick = () => {
     setTotal(totalClicks.concat(-1));
-    setBad(bad + 1);
-    setAll(all + 1);
-    setCount(count - 1);
   };
   return (
     <div>
@@ -85,13 +79,6 @@ const App = () => {
         <Button handleClick={handleNeutralClick} text="neutral" />
         <Button handleClick={handleBadClick} text="bad" />
         <h1>statistics</h1>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {all}</p>
-        <p>average {count / all}</p>
-        <p>positive {(positive * 100) / all} %</p>
-        <p>-----------------------------------------------</p>
         <Statistics totalClicks={totalClicks} />
       </div>
     </div>
