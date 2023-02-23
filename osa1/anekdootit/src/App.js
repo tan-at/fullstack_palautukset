@@ -18,10 +18,19 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   let [rand, setRand] = useState(0);
+  const [points, setPoints] = useState(new Uint8Array(8));
 
-  const handleButtonClick = () => {
-    const satunnainen = Math.floor(Math.random() * (anecdotes.length - 0)) + 0;
+  const handleNextClick = () => {
+    const satunnainen = Math.floor(Math.random() * anecdotes.length);
     setRand((rand = satunnainen));
+  };
+
+  const handleVoteClick = () => {
+    console.log("pistetaulukko ennen lisäystä: ", points);
+    const copy = [...points];
+    copy[rand] += 1;
+    setPoints(copy);
+    console.log("pistetaulukko lisäyksen jälkeen: ", points);
   };
 
   return (
@@ -29,8 +38,10 @@ const App = () => {
       <h1>Anecdote of the day</h1>
       <div>
         {anecdotes[rand]}
+        <div>has {points[rand]} votes</div>
         <div>
-          <Button handleClick={handleButtonClick} text="seuraava anekdootti" />
+          <Button handleClick={handleVoteClick} text="vote" />
+          <Button handleClick={handleNextClick} text="seuraava anekdootti" />
           {rand}
         </div>
       </div>
