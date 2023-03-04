@@ -3,7 +3,6 @@ const Header = ({ header }) => {
 };
 
 const Part = ({ part }) => {
-  //console.log("Part-osassa: ", part);
   return (
     <p>
       {part.name} {part.exercises}
@@ -11,9 +10,15 @@ const Part = ({ part }) => {
   );
 };
 
+const Total = ({ total }) => {
+  const totalExcercises = total.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.exercises,
+    0
+  );
+  return <b>total of {totalExcercises} exercises</b>;
+};
+
 const Course = ({ course }) => {
-  //console.log(course);
-  //console.log("Course-osassa: ", course.parts);
   const parts = course.parts;
 
   return (
@@ -23,6 +28,7 @@ const Course = ({ course }) => {
         {parts.map((part) => (
           <Part key={part.id} part={part} />
         ))}
+        <Total total={parts} />
       </div>
     </div>
   );
