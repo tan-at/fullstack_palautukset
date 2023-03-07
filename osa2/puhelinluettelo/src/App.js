@@ -16,7 +16,11 @@ const App = () => {
     const personObject = {
       name: newName,
     };
-    setPersons(persons.concat(personObject));
+    if (persons.filter((person) => person.name === newName).length > 0) {
+      window.alert(`${newName} is already added to phonebook`);
+    } else {
+      setPersons(persons.concat(personObject));
+    }
     setNewName("");
   };
 
@@ -36,7 +40,6 @@ const App = () => {
             <button type="submit">add</button>
           </div>
         </form>
-        <h2>Phonebook2</h2>
         <h2>Numbers</h2>
         {persons.map((persons) => (
           <Persons key={persons.name} person={persons.name} />
