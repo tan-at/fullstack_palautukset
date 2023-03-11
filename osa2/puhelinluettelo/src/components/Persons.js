@@ -1,8 +1,12 @@
-const Persons = ({ person }) => {
+import Person from "./Person";
+
+const Persons = (props) => {
   return (
-    <p>
-      {person.name} {person.number}
-    </p>
+    <div>
+      {props.persons.map((person) => (
+        <Person key={person.name} person={person} />
+      ))}
+    </div>
   );
 };
 
