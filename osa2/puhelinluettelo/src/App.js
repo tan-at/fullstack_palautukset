@@ -25,13 +25,24 @@ const App = () => {
     if (persons.filter((person) => person.name === newName).length > 0) {
       window.alert(`${newName} is already added to phonebook`);
     } else {
-      console.log(personObject);
       personComms.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
       });
     }
     setNewName("");
     setNewNumber("");
+  };
+
+  const handleDeletePerson = (name, id) => {
+    return () => {
+      if (window.confirm(`Really delete ${name}?`)) {
+        personComms.deletePerson(id).then(() => {
+          setPersons(persons.filter((n) => n.id !== id));
+          setNewName("");
+          setNewNumber("");
+        });
+      }
+    };
   };
 
   const handleNameChange = (event) => {
@@ -54,7 +65,7 @@ const App = () => {
           addPerson={addPerson}
         />
         <h2>Numbers</h2>
-        <Persons persons={persons} />
+        <Persons persons={persons} handleDeletePerson={handleDeletePerson} />
       </div>
     </div>
   );
