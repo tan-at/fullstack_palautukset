@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import personService from "./services/personComms";
 import personComms from "./services/personComms";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((response) => {
@@ -27,6 +28,7 @@ const App = () => {
     } else {
       personComms.create(personObject).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
+        setErrorMessage(`${newName} was added to the phonebook`);
       });
     }
     setNewName("");
@@ -36,11 +38,23 @@ const App = () => {
   const handleDeletePerson = (name, id) => {
     return () => {
       if (window.confirm(`Really delete ${name}?`)) {
-        personComms.deletePerson(id).then(() => {
-          setPersons(persons.filter((n) => n.id !== id));
-          setNewName("");
-          setNewNumber("");
-        });
+        personComms
+          .deletePerson(id)
+          .then(() => {
+            setPersons(persons.filter((n) => n.id !== id));
+            setErrorMessage(`${name} was deleted`);
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => {
+            setPersons(persons.filter((n) => n.name !== name));
+            setErrorMessage(
+              `the user "${name}" has already been deleted from server`
+            );
+          });
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       }
     };
   };
@@ -55,6 +69,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <div>
         <h2>add a new</h2>
         <PersonForm
