@@ -26,13 +26,19 @@ const App = () => {
     if (persons.filter((person) => person.name === newName).length > 0) {
       window.alert(`${newName} is already added to phonebook`);
     } else {
-      personComms.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setErrorMessage(`${newName} was added to the phonebook`);
-      });
+      personComms
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setErrorMessage(`${newName} was added to the phonebook`);
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          window.alert(`${error.response.data.error}`);
+          console.log(error.response.data);
+        });
     }
-    setNewName("");
-    setNewNumber("");
   };
 
   const handleDeletePerson = (name, id) => {
