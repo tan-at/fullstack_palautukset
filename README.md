@@ -2,6 +2,9 @@
 
 Here is all the programming I've done for Helsinki University's course Full Stack Open so far.
 
+<p> Part 3 website hosted at: https://puhelinluettelo-bkjh.onrender.com/ </p>
+<p> Part 3 code found at: https://github.com/tan-at/puhelinluettelon_backend </p>
+
 ## Chapters
 | Part | Status | Extras to do |
 | ---- | ------ | ------------ |
